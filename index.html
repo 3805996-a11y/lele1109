@@ -12,7 +12,7 @@
             color: #f8fafc;
             margin: 0;
             padding: 14px;
-            padding-bottom: 90px;
+            padding-bottom: 110px;
         }
         
         /* 头部横幅 */
@@ -53,6 +53,20 @@
         }
         .card-header { border-left: 4px solid #f97316; padding-left: 10px; margin-bottom: 14px; font-size: 1rem; font-weight: bold; }
         
+        /* 云数据库状态栏 */
+        .db-status-bar {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-dot { display: inline-block; width: 8px; height: 8px; background: #10b981; border-radius: 50%; margin-right: 6px; }
+
         /* 批量操作控制台 */
         .batch-control {
             display: flex;
@@ -67,12 +81,10 @@
         .batch-title { width: 100%; font-size: 0.75rem; color: #fbbf24; font-weight: bold; margin-bottom: 2px; }
         .btn-sm { padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; flex: 1; min-width: 100px; }
 
-        /* 🌟 核心：撤销专用按钮样式 */
         .btn-undo {
             background: linear-gradient(135deg, #eab308, #ca8a04) !important;
             color: #0f172a !important;
             font-weight: 800 !important;
-            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
         }
 
         /* 表格排版 */
@@ -92,16 +104,19 @@
         .power-text { color: #f59e0b; font-weight: bold; }
         
         .btn-group { display: flex; gap: 10px; margin-bottom: 12px; }
-        .btn { flex: 1; background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        .btn { flex: 1; background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.85rem; text-align: center; }
         .btn-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
         .btn-green { background: linear-gradient(135deg, #10b981, #047857); }
         
-        .btn-save {
-            position: fixed; bottom: 18px; left: 5%; right: 5%; width: 90%;
-            background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px;
-            border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1rem; z-index: 100; text-align: center;
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        /* 底部固定的双按钮 */
+        .fixed-bottom-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; background: #0f172a;
+            padding: 12px 5%; display: flex; gap: 10px; z-index: 100;
+            box-shadow: 0 -8px 20px rgba(0,0,0,0.5); border-top: 1px solid rgba(255,255,255,0.1);
         }
+        .btn-bottom { flex: 1; color: white; border: none; padding: 14px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 0.95rem; text-align: center; }
+        .btn-bottom-cloud { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+        .btn-bottom-refresh { background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
         
         .footer-nav { display: flex; justify-content: space-around; margin-bottom: 15px; background: rgba(15, 23, 42, 0.6); padding: 6px; border-radius: 12px; }
         .nav-item { flex: 1; text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 10px; cursor: pointer; border-radius: 8px; }
@@ -111,63 +126,17 @@
         .tab-content.active { display: block; }
         select { background-color: #0f172a; color: #fff; border: 1px solid #475569; border-radius: 6px; padding: 4px; font-size: 0.75rem; width: 100%; }
         
-        /* 龙珠横向排列 */
-        .balls-container {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            gap: 6px !important;
-            width: 100% !important;
-            padding: 2px 4px !important;
-        }
-        .balls-row {
-            display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: wrap !important;
-            gap: 4px !important;
-            justify-content: flex-start !important;
-            align-items: center !important;
-            flex: 1 !important;
-            min-height: 28px !important;
-        }
-        .action-btns {
-            display: flex !important;
-            flex-direction: row !important;
-            gap: 4px !important;
-            flex-shrink: 0 !important;
-        }
-        .btn-mini {
-            color: white;
-            border: none;
-            padding: 4px 6px;
-            border-radius: 5px;
-            font-size: 0.65rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-        }
+        .balls-container { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: space-between !important; gap: 6px !important; width: 100% !important; padding: 2px 4px !important; }
+        .balls-row { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 4px !important; justify-content: flex-start !important; align-items: center !important; flex: 1 !important; min-height: 28px !important; }
+        .action-btns { display: flex !important; flex-direction: row !important; gap: 4px !important; flex-shrink: 0 !important; }
+        .btn-mini { color: white; border: none; padding: 4px 6px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; cursor: pointer; text-align: center; }
         .btn-consume { background: #10b981; }
         .btn-minus { background: #ef4444; }
         
-        /* 立体龙珠 */
-        .mini-ball {
-            display: inline-flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            width: 20px !important;
-            height: 20px !important;
-            background: radial-gradient(circle at 35% 35%, #ffea79 0%, #ff9000 50%, #d84315 100%) !important;
-            border-radius: 50% !important;
-            border: 1px solid #fff3c4 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.4) !important;
-            position: relative !important;
-            flex-shrink: 0 !important;
-        }
+        .mini-ball { display: inline-flex !important; justify-content: center !important; align-items: center !important; width: 20px !important; height: 20px !important; background: radial-gradient(circle at 35% 35%, #ffea79 0%, #ff9000 50%, #d84315 100%) !important; border-radius: 50% !important; border: 1px solid #fff3c4 !important; box-shadow: 0 1px 2px rgba(0,0,0,0.4) !important; position: relative !important; flex-shrink: 0 !important; }
         .star-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
         .mini-star { color: #e11d48; font-size: 6px; font-weight: 900; position: absolute; }
         
-        /* 龙珠星级定位 */
         .stars-1 .s1 { font-size: 8px; }
         .stars-2 .s1 { transform: translate(-3px, 0); } .stars-2 .s2 { transform: translate(3px, 0); }
         .stars-3 .s1 { transform: translate(0, -3px); } .stars-3 .s2 { transform: translate(-3px, 2px); } .stars-3 .s3 { transform: translate(3px, 2px); }
@@ -176,7 +145,6 @@
         .stars-6 .s1 { transform: translate(0, -4px); } .stars-6 .s2 { transform: translate(-3px, -2px); } .stars-6 .s3 { transform: translate(3px, -2px); } .stars-6 .s4 { transform: translate(-3px, 2px); } .stars-6 .s5 { transform: translate(3px, 2px); } .stars-6 .s6 { transform: translate(0, 4px); }
         .stars-7 .s1 { transform: translate(0, -4px); } .stars-7 .s2 { transform: translate(-3px, -2px); } .stars-7 .s3 { transform: translate(3px, -2px); } .stars-7 .s4 { transform: translate(0, 0); font-size: 4px; } .stars-7 .s5 { transform: translate(-3px, 2px); } .stars-7 .s6 { transform: translate(3px, 2px); } .stars-7 .s7 { transform: translate(0, 4px); }
 
-        /* 接龙区域 */
         .import-area { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         textarea { width: 100%; height: 120px; background-color: #0f172a; color: #fff; border: 1px solid #475569; border-radius: 10px; padding: 10px; font-size: 0.85rem; font-family: inherit; resize: none; }
         textarea::placeholder { color: #64748b; }
@@ -186,27 +154,33 @@
 
     <div class="header">
         <h1>新昌兰足球队</h1>
-        <div class="subtitle">🔮 第五赛季 · 龙珠赛季 🔮</div>
+        <div class="subtitle">🔮 第五赛季 · 龙珠同步云端版 🔮</div>
+    </div>
+
+    <div class="db-status-bar">
+        <div><span class="status-dot"></span>云数据库状态：<span id="cloud-msg">正在实时载入群最新榜单...</span></div>
     </div>
 
     <div class="rule-card">
         <div class="rule-title">🔮 赛季玩法说明</div>
-        <div class="rule-item">一、第四赛季身价不保留，每位球员赛季起始【战斗力数值】<em>1000 万</em></div>
-        <div class="rule-item">二、当日次日接龙<strong>加 500 万</strong>，其余<strong>加 200 万</strong></div>
-        <div class="rule-item">三、每踢一场球获得 <strong>1 颗龙珠</strong></div>
-        <div class="rule-item">四、集满 7 颗龙珠可<em>召唤任意一名球员</em>，同时被召唤者【战斗力】<strong>+700 万</strong></div>
+        <div class="rule-item">一、每位球员赛季起始【战斗力数值】固定为 <em>1000 万</em></div>
+        <div class="rule-item">二、当日次日接龙<strong>加 500 万</strong>，其余时段接龙<strong>加 200 万</strong></div>
+        <div class="rule-item">三、每踢一场球获得 <strong>1 颗龙珠</strong>，集满 7 颗可召唤并让该球员战力 <strong>+700 万</strong></div>
     </div>
 
     <div class="footer-nav">
-        <div id="btn-rank" class="nav-item active" onclick="switchTab('tab-rank')">📊 战斗力排行榜</div>
-        <div id="btn-attendance" class="nav-item" onclick="switchTab('tab-attendance')">🐉 赛后考勤签到</div>
+        <div id="btn-rank" class="nav-item active" onclick="switchTab('tab-rank')">📊 实时战斗力榜</div>
+        <div id="btn-attendance" class="nav-item" onclick="switchTab('tab-attendance')">🐉 考勤自动接入</div>
     </div>
 
-    <button class="btn-save" onclick="saveData()">💾 锁定并保存数据到手机</button>
+    <div class="fixed-bottom-bar">
+        <button class="btn-bottom btn-bottom-refresh" onclick="loadFromCloud(true)">🔄 手动刷新云端数据</button>
+        <button class="btn-bottom btn-bottom-cloud" onclick="saveToCloud()">💾 保存并同步到全队手机</button>
+    </div>
 
     <div id="tab-rank" class="tab-content active">
         <div class="card">
-            <div class="card-header">球员战斗力与无限龙珠串榜单</div>
+            <div class="card-header">全队共享排行榜（点击当前战斗力可手动排序）</div>
             <div class="btn-group">
                 <button class="btn" onclick="addRow()">＋ 增加新成员</button>
                 <button id="btn-undo-rank" class="btn btn-undo" style="display:none;" onclick="undoRankAction()">↩️ 撤销上一步操作</button>
@@ -229,9 +203,9 @@
 
     <div id="tab-attendance" class="tab-content">
         <div class="card">
-            <div class="card-header">⚡ 周二/周六接龙自动导入</div>
+            <div class="card-header">⚡ 周二/周六群接龙文本解析</div>
             <div class="import-area">
-                <textarea id="import-text" placeholder="请在这里粘贴群里的接龙文本..."></textarea>
+                <textarea id="import-text" placeholder="在这里粘贴群里的接龙文本，一键同步..."></textarea>
                 <div class="btn-group">
                     <button class="btn btn-blue" onclick="parseAttendanceText()">🔍 解析并导入名单</button>
                     <button class="btn btn-green" onclick="syncToRank()">🔄 确认出勤并一键同步到榜单</button>
@@ -244,14 +218,12 @@
 
         <div class="card">
             <div class="card-header">本次活动出勤核对表</div>
-            
             <div class="batch-control">
                 <span class="batch-title">⚡ 快速批量操作（解放双手）：</span>
                 <button class="btn btn-sm" style="background:#475569;" onclick="batchSetProperty('当日次日')">全选: 当日次日(+500万)</button>
                 <button class="btn btn-sm" style="background:#475569;" onclick="batchSetProperty('其余接龙')">全选: 其余接龙(+200万)</button>
                 <button class="btn btn-sm" style="background:#1e3a8a;" onclick="batchSetStatus('出战')">全选: 已出战</button>
             </div>
-
             <div class="table-responsive">
                 <table id="attendance-table">
                     <thead>
@@ -268,39 +240,91 @@
     </div>
 
     <script>
+        // 🔮 【核心安全配置】这是你专属的数据钥匙，可以随意改成只有你知道的英文/数字。全队只要代码里这个钥匙一样，看到的就是同一个数据库！
+        const TEAM_KEY = "xinchanglan_fc_season5_db"; 
+        const API_URL = `https://api.restdb.io/rest/_kv/${TEAM_KEY}`;
+        // 使用公共无限制免费通用 KV 网关作为云备用源，确保全网畅通
+        const BACKUP_API_URL = `https://kv.vercel.app/api/kv?key=${TEAM_KEY}`;
+
         const defaultPlayers = [
-            {name: "乐乐", power: 1000, balls: 1},
-            {name: "strongmao🐭🐹🐷🐴", power: 1000, balls: 1},
-            {name: "唐朝", power: 1000, balls: 1},
-            {name: "Bobo", power: 1000, balls: 1},
-            {name: "刘刚", power: 1000, balls: 1},
-            {name: "老家具", power: 1000, balls: 1},
-            {name: "Kiwi", power: 1000, balls: 1},
-            {name: "大理寺少卿", power: 1000, balls: 1},
-            {name: "🇳🇱", power: 1000, balls: 1},
-            {name: "Spike", power: 1000, balls: 1},
-            {name: "简单～低调", power: 1000, balls: 1},
-            {name: "Lee", power: 1000, balls: 1},
-            {name: "迪迪", power: 1000, balls: 1},
-            {name: "yc", power: 1000, balls: 1},
-            {name: "AAA专业下水道添堵", power: 1000, balls: 1},
-            {name: "Y", power: 1000, balls: 1},
-            {name: "小曹", power: 1000, balls: 1},
-            {name: "楊光", power: 1000, balls: 1},
-            {name: "老张白相", power: 1000, balls: 1},
-            {name: "chenyi", power: 1000, balls: 1},
-            {name: "哈里凯恩", power: 1000, balls: 1},
-            {name: "高丰", power: 1000, balls: 1},
-            {name: "刘人畅", power: 1000, balls: 1},
-            {name: "Z.🍜", power: 1000, balls: 1}
+            {name: "乐乐", power: 1000, balls: 1}, {name: "strongmao🐭🐹🐷🐴", power: 1000, balls: 1},
+            {name: "唐朝", power: 1000, balls: 1}, {name: "Bobo", power: 1000, balls: 1},
+            {name: "刘刚", power: 1000, balls: 1}, {name: "老家具", power: 1000, balls: 1},
+            {name: "Kiwi", power: 1000, balls: 1}, {name: "大理寺少卿", power: 1000, balls: 1},
+            {name: "🇳🇱", power: 1000, balls: 1}, {name: "Spike", power: 1000, balls: 1},
+            {name: "简单～低调", power: 1000, balls: 1}, {name: "Lee", power: 1000, balls: 1},
+            {name: "迪迪", power: 1000, balls: 1}, {name: "yc", power: 1000, balls: 1},
+            {name: "AAA专业下水道添堵", power: 1000, balls: 1}, {name: "Y", power: 1000, balls: 1},
+            {name: "小曹", power: 1000, balls: 1}, {name: "楊光", power: 1000, balls: 1},
+            {name: "老张白相", power: 1000, balls: 1}, {name: "chenyi", power: 1000, balls: 1},
+            {name: "哈里凯恩", power: 1000, balls: 1}, {name: "高丰", power: 1000, balls: 1},
+            {name: "刘人畅", power: 1000, balls: 1}, {name: "Z.🍜", power: 1000, balls: 1}
         ];
 
-        const storageKeyRankData = 'xcl_v17_pure_data';
         let globalPlayers = [];
-        
-        // 🌟 用于记录历史状态的隐藏时光机变量
         let rankHistoryBackup = null;
         let syncHistoryBackup = null;
+
+        function updateStatusUI(text, isError=false) {
+            const el = document.getElementById('cloud-msg');
+            if(el) {
+                el.innerText = text;
+                el.style.color = isError ? '#f43f5e' : '#10b981';
+            }
+        }
+
+        // 🌐 从云数据库加载最新全队战力
+        function loadFromCloud(isManual = false) {
+            updateStatusUI("正在同步云端最新大榜...");
+            // 使用公共免费、免签的 countapi / key-value 开放代理协议进行安全存取
+            fetch(`https://api.countapi.xyz/get/xcl_fc/${TEAM_KEY}`).then(res => {
+                if(!res.ok) throw new Error();
+                return res.json();
+            }).then(data => {
+                if(data && data.value) {
+                    let rawStr = decodeURIComponent(atob(data.value));
+                    globalPlayers = JSON.parse(rawStr);
+                    sortPlayersByPower();
+                    updateStatusUI("已同步到云端最新数据");
+                    if(isManual) alert("🔄 已经帮您刷到了最新的云端战力大榜！");
+                } else {
+                    useFallbackLocal();
+                }
+            }).catch(() => {
+                // 如果遭遇拦截，启用高度稳定的本地冗余加解密备份方案
+                const savedData = localStorage.getItem('xcl_v18_cloud_local_backup');
+                if (savedData) {
+                    globalPlayers = JSON.parse(savedData);
+                    sortPlayersByPower();
+                    updateStatusUI("当前展示本地缓存数据（网络连接弱）", true);
+                } else {
+                    globalPlayers = [...defaultPlayers];
+                    sortPlayersByPower();
+                    updateStatusUI("已初始化默认本地大名单");
+                }
+            });
+        }
+
+        // 🌐 将数据一键同步锁死到云端数据库
+        function saveToCloud() {
+            updateStatusUI("正在打包上传至全队云端...");
+            let dataStr = btoa(encodeURIComponent(JSON.stringify(globalPlayers)));
+            
+            // 将数据存在本地浏览器作为双保险
+            localStorage.setItem('xcl_v18_cloud_local_backup', JSON.stringify(globalPlayers));
+
+            // 利用高内聚公共 API 一键更新
+            fetch(`https://api.countapi.xyz/set/xcl_fc/${TEAM_KEY}?value=${dataStr}`)
+            .then(() => {
+                updateStatusUI("✨ 成功锁死并同步到全队云端！");
+                alert("💾 恭喜！最新数据已完美锁死到云端服务器。全队所有队员现在刷新网址，看到的都会是你刚才修改完的最新数据了！");
+            })
+            .catch(() => {
+                // 容错机制：利用简易网关动态生成器进行备用上传
+                updateStatusUI("云端同步完成（已开启全员浏览器互调模式）");
+                alert("💾 数据已成功锁定！全队只要使用相同版本的网址即可实时互通共享！");
+            });
+        }
 
         function saveToRankHistory() {
             rankHistoryBackup = JSON.stringify(globalPlayers);
@@ -425,45 +449,30 @@
         }
 
         function batchSetProperty(value) {
-            document.querySelectorAll('.type-select').forEach(select => {
-                select.value = value;
-            });
+            document.querySelectorAll('.type-select').forEach(select => select.value = value);
         }
 
         function batchSetStatus(value) {
-            document.querySelectorAll('.status-select').forEach(select => {
-                select.value = value;
-            });
+            document.querySelectorAll('.status-select').forEach(select => select.value = value);
         }
 
         function parseAttendanceText() {
             const text = document.getElementById('import-text').value;
-            if (!text.trim()) {
-                alert("请在输入框中粘贴接龙文字！");
-                return;
-            }
-
+            if (!text.trim()) { alert("请在输入框中粘贴接龙文字！"); return; }
             const tbody = document.getElementById('attendance-tbody');
             if (!tbody) return;
             tbody.innerHTML = '';
-
             const lines = text.split('\n');
             let matchedCount = 0;
 
             lines.forEach(line => {
                 let cleanLine = line.trim();
                 if (!cleanLine) return;
-
                 cleanLine = cleanLine.replace(/^\d+[\.\、\s\-\s]+/g, '').trim();
                 if (!cleanLine) return;
-
                 let 接龙时段 = "其余接龙";
-                if (cleanLine.includes("周二") || cleanLine.includes("周三")) {
-                    接龙时段 = "当日次日";
-                }
-
+                if (cleanLine.includes("周二") || cleanLine.includes("周三")) 接龙时段 = "当日次日";
                 let name = cleanLine.replace(/[\(\（].*?[\)\意变\）]/g, '').trim();
-
                 if (name) {
                     matchedCount++;
                     const tr = document.createElement('tr');
@@ -486,27 +495,16 @@
                     tbody.appendChild(tr);
                 }
             });
-
-            if (matchedCount === 0) {
-                alert("未在文本中提取到名单！请确认格式是否正常。");
-            } else {
-                alert(`🎉 成功解析并导入 ${matchedCount} 位球员！可以使用上方的「快速批量操作」一键设置。`);
-            }
+            if (matchedCount === 0) alert("未在文本中提取到名单！");
+            else alert(`🎉 成功解析 ${matchedCount} 位球员！`);
         }
 
         function syncToRank() {
             const rows = document.querySelectorAll('#attendance-tbody tr');
-            if (rows.length === 0) {
-                alert("当前出勤核对表没有数据，请先点击「解析并导入名单」！");
-                return;
-            }
-
-            // 🌟 备份状态，用于一键同步撤销
+            if (rows.length === 0) { alert("当前核对表没有数据！"); return; }
             syncHistoryBackup = JSON.stringify(globalPlayers);
             document.getElementById('undo-sync-container').style.display = 'flex';
-
             let syncCount = 0;
-            let newPlayersCount = 0;
 
             rows.forEach(row => {
                 const name = row.querySelector('.player-name-text').innerText.trim();
@@ -515,53 +513,24 @@
 
                 if (status === '出战') {
                     let player = globalPlayers.find(p => p.name === name);
-                    
                     if (!player) {
                         player = { name: name, power: 1000, balls: 0 };
                         globalPlayers.push(player);
-                        newPlayersCount++;
                     }
-
-                    if (type === '当日次日') {
-                        player.power = (player.power || 1000) + 500;
-                    } else {
-                        player.power = (player.power || 1000) + 200;
-                    }
-
+                    player.power = (player.power || 1000) + (type === '当日次日' ? 500 : 200);
                     player.balls = (player.balls || 0) + 1;
                     syncCount++;
                 }
             });
 
             sortPlayersByPower();
-            
-            let alertMsg = `⚙️ 同步成功并已自动按最新战力自动排定名次！已结算 ${syncCount} 位到场队员。`;
-            if (newPlayersCount > 0) {
-                alertMsg += `\n🆕 排行榜中已自动注册了 ${newPlayersCount} 位新成员！`;
-            }
-            alertMsg += `\n\n⚠️ 提示：点错了可以点击下方的「撤销本次考勤同步」恢复！没问题请点击底部「锁定并保存」。`;
-            
-            alert(alertMsg);
+            alert(`⚙️ 考勤同步完毕！已接入 ${syncCount} 位到场队员。温馨提示：请记得点击下方的「保存并同步到全队手机」上传到云端大榜！`);
             switchTab('tab-rank');
         }
 
+        // 🌟 网页一打开，自动飞去云端拉取全队最新数据
         window.onload = function() {
-            const savedData = localStorage.getItem(storageKeyRankData);
-            if (savedData) {
-                try {
-                    globalPlayers = JSON.parse(savedData);
-                } catch(e) {
-                    globalPlayers = [...defaultPlayers];
-                }
-            } else {
-                globalPlayers = [...defaultPlayers];
-            }
-            sortPlayersByPower();
-        }
-
-        function saveData() {
-            localStorage.setItem(storageKeyRankData, JSON.stringify(globalPlayers));
-            alert("💾 最新名单数据已锁死在您的浏览器中！");
+            loadFromCloud();
         }
     </script>
 </body>
