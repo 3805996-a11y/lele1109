@@ -15,20 +15,20 @@
             padding-bottom: 90px;
         }
         
-        /* 头部酷炫横幅 */
+        /* 头部横幅 */
         .header {
             text-align: center;
             background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #1d4ed8 100%);
-            padding: 20px 10px;
+            padding: 24px 10px;
             border-radius: 20px;
             margin-bottom: 15px;
             box-shadow: 0 10px 25px -5px rgba(234, 88, 12, 0.3), 0 0 15px rgba(29, 78, 216, 0.2);
             border: 2px solid #fbbf24;
         }
-        h1 { margin: 0; font-size: 1.6rem; color: #ffffff; text-shadow: 0 3px 6px rgba(0,0,0,0.5); letter-spacing: 1px; }
-        .subtitle { margin: 6px 0 0 0; font-size: 0.9rem; color: #fcd34d; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+        h1 { margin: 0; font-size: 2.1rem; color: #ffffff; text-shadow: 0 3px 6px rgba(0,0,0,0.6); letter-spacing: 2px; font-weight: 800; }
+        .subtitle { margin: 10px 0 0 0; font-size: 1.25rem; color: #fcd34d; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.6); letter-spacing: 1px; }
         
-        /* 玩法说明卡片 */
+        /* 说明卡片 */
         .rule-card {
             background: rgba(15, 23, 42, 0.6);
             border-left: 5px solid #ea580c;
@@ -41,7 +41,7 @@
         .rule-item::before { content: '•'; position: absolute; left: 0; color: #ea580c; }
         .rule-item em { color: #f43f5e; font-style: normal; font-weight: bold; }
 
-        /* 通用卡片容器 */
+        /* 通用卡片 */
         .card {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(10px);
@@ -53,7 +53,29 @@
         }
         .card-header { border-left: 4px solid #f97316; padding-left: 10px; margin-bottom: 14px; font-size: 1rem; font-weight: bold; }
         
-        /* 表格高级排版 */
+        /* 批量操作控制台 */
+        .batch-control {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px dashed rgba(249, 115, 22, 0.3);
+        }
+        .batch-title { width: 100%; font-size: 0.75rem; color: #fbbf24; font-weight: bold; margin-bottom: 2px; }
+        .btn-sm { padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; flex: 1; min-width: 100px; }
+
+        /* 🌟 核心：撤销专用按钮样式 */
+        .btn-undo {
+            background: linear-gradient(135deg, #eab308, #ca8a04) !important;
+            color: #0f172a !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+        }
+
+        /* 表格排版 */
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
         table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.85rem; text-align: center; table-layout: fixed; }
         th, td { padding: 10px 4px; border-bottom: 1px solid rgba(51, 65, 85, 0.4); border-right: 1px solid rgba(51, 65, 85, 0.2); vertical-align: middle; }
@@ -62,8 +84,7 @@
         th:last-child { border-radius: 0 8px 0 0; border-right: none; }
         td:last-child { border-right: none; }
         
-        /* 名字容器 */
-        .player-info { display: block; text-align: left; padding-left: 6px; }
+        .sortable-th { cursor: pointer; color: #fbbf24 !important; text-decoration: underline; text-underline-offset: 4px; }
         .player-name-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; display: block; }
 
         /* 交互样式 */
@@ -72,6 +93,8 @@
         
         .btn-group { display: flex; gap: 10px; margin-bottom: 12px; }
         .btn { flex: 1; background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        .btn-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .btn-green { background: linear-gradient(135deg, #10b981, #047857); }
         
         .btn-save {
             position: fixed; bottom: 18px; left: 5%; right: 5%; width: 90%;
@@ -88,19 +111,58 @@
         .tab-content.active { display: block; }
         select { background-color: #0f172a; color: #fff; border: 1px solid #475569; border-radius: 6px; padding: 4px; font-size: 0.75rem; width: 100%; }
         
-        /* 龙珠操作区 */
-        .balls-container { display: flex; align-items: center; justify-content: space-between; gap: 4px; width: 100%; }
-        .balls-row { display: flex; gap: 3px; justify-content: flex-start; align-items: center; flex-wrap: wrap; flex: 1; min-height: 32px; }
-        .action-btns { display: flex; flex-direction: column; gap: 3px; }
-        .btn-mini { color: white; border: none; padding: 3px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; cursor: pointer; text-align: center; }
+        /* 龙珠横向排列 */
+        .balls-container {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 6px !important;
+            width: 100% !important;
+            padding: 2px 4px !important;
+        }
+        .balls-row {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            gap: 4px !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            flex: 1 !important;
+            min-height: 28px !important;
+        }
+        .action-btns {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 4px !important;
+            flex-shrink: 0 !important;
+        }
+        .btn-mini {
+            color: white;
+            border: none;
+            padding: 4px 6px;
+            border-radius: 5px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
         .btn-consume { background: #10b981; }
         .btn-minus { background: #ef4444; }
         
-        /* 立体龙珠样式 */
+        /* 立体龙珠 */
         .mini-ball {
-            display: inline-flex; justify-content: center; align-items: center; width: 19px; height: 19px;
-            background: radial-gradient(circle at 35% 35%, #ffea79 0%, #ff9000 50%, #d84315 100%);
-            border-radius: 50%; border: 1px solid #fff3c4; box-shadow: 0 1px 2px rgba(0,0,0,0.4); position: relative;
+            display: inline-flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 20px !important;
+            height: 20px !important;
+            background: radial-gradient(circle at 35% 35%, #ffea79 0%, #ff9000 50%, #d84315 100%) !important;
+            border-radius: 50% !important;
+            border: 1px solid #fff3c4 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.4) !important;
+            position: relative !important;
+            flex-shrink: 0 !important;
         }
         .star-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
         .mini-star { color: #e11d48; font-size: 6px; font-weight: 900; position: absolute; }
@@ -113,6 +175,11 @@
         .stars-5 .s1 { transform: translate(-2.5px, -2.5px); } .stars-5 .s2 { transform: translate(2.5px, -2.5px); } .stars-5 .s3 { transform: translate(0, 0); font-size: 5px; } .stars-5 .s4 { transform: translate(-2.5px, 2.5px); } .stars-5 .s5 { transform: translate(2.5px, 2.5px); }
         .stars-6 .s1 { transform: translate(0, -4px); } .stars-6 .s2 { transform: translate(-3px, -2px); } .stars-6 .s3 { transform: translate(3px, -2px); } .stars-6 .s4 { transform: translate(-3px, 2px); } .stars-6 .s5 { transform: translate(3px, 2px); } .stars-6 .s6 { transform: translate(0, 4px); }
         .stars-7 .s1 { transform: translate(0, -4px); } .stars-7 .s2 { transform: translate(-3px, -2px); } .stars-7 .s3 { transform: translate(3px, -2px); } .stars-7 .s4 { transform: translate(0, 0); font-size: 4px; } .stars-7 .s5 { transform: translate(-3px, 2px); } .stars-7 .s6 { transform: translate(3px, 2px); } .stars-7 .s7 { transform: translate(0, 4px); }
+
+        /* 接龙区域 */
+        .import-area { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        textarea { width: 100%; height: 120px; background-color: #0f172a; color: #fff; border: 1px solid #475569; border-radius: 10px; padding: 10px; font-size: 0.85rem; font-family: inherit; resize: none; }
+        textarea::placeholder { color: #64748b; }
     </style>
 </head>
 <body>
@@ -125,13 +192,13 @@
     <div class="rule-card">
         <div class="rule-title">🔮 赛季玩法说明</div>
         <div class="rule-item">一、第四赛季身价不保留，每位球员赛季起始【战斗力数值】<em>1000 万</em></div>
-        <div class="rule-item">二、当日次日接龙<strong>加 500</strong>，其余<strong>加 200</strong></div>
+        <div class="rule-item">二、当日次日接龙<strong>加 500 万</strong>，其余<strong>加 200 万</strong></div>
         <div class="rule-item">三、每踢一场球获得 <strong>1 颗龙珠</strong></div>
-        <div class="rule-item">四、集满 7 颗龙珠可<em>召唤任意一名球员</em>到自己队中，同时被召唤者【战斗力】<strong>+700</strong></div>
+        <div class="rule-item">四、集满 7 颗龙珠可<em>召唤任意一名球员</em>，同时被召唤者【战斗力】<strong>+700 万</strong></div>
     </div>
 
     <div class="footer-nav">
-        <div id="btn-rank" class="nav-item active" onclick="switchTab('tab-rank')">📊 球员战斗力排行榜</div>
+        <div id="btn-rank" class="nav-item active" onclick="switchTab('tab-rank')">📊 战斗力排行榜</div>
         <div id="btn-attendance" class="nav-item" onclick="switchTab('tab-attendance')">🐉 赛后考勤签到</div>
     </div>
 
@@ -141,16 +208,17 @@
         <div class="card">
             <div class="card-header">球员战斗力与无限龙珠串榜单</div>
             <div class="btn-group">
-                <button class="btn" onclick="addRow()">＋ 召唤新球员</button>
+                <button class="btn" onclick="addRow()">＋ 增加新成员</button>
+                <button id="btn-undo-rank" class="btn btn-undo" style="display:none;" onclick="undoRankAction()">↩️ 撤销上一步操作</button>
             </div>
             <div class="table-responsive">
                 <table id="rank-table">
                     <thead>
                         <tr>
                             <th style="width: 10%;">序</th>
-                            <th style="width: 38%;">球员名称</th>
-                            <th style="width: 22%;">当前战斗力</th>
-                            <th style="width: 30%;">龙珠排面</th>
+                            <th style="width: 30%;">球员名称</th>
+                            <th style="width: 22%;" class="sortable-th" onclick="sortPlayersByPower()">当前战斗力 ↕</th>
+                            <th style="width: 38%;">龙珠收集状态</th>
                         </tr>
                     </thead>
                     <tbody id="rank-tbody"></tbody>
@@ -161,13 +229,36 @@
 
     <div id="tab-attendance" class="tab-content">
         <div class="card">
-            <div class="card-header">当前出勤核对</div>
+            <div class="card-header">⚡ 周二/周六接龙自动导入</div>
+            <div class="import-area">
+                <textarea id="import-text" placeholder="请在这里粘贴群里的接龙文本..."></textarea>
+                <div class="btn-group">
+                    <button class="btn btn-blue" onclick="parseAttendanceText()">🔍 解析并导入名单</button>
+                    <button class="btn btn-green" onclick="syncToRank()">🔄 确认出勤并一键同步到榜单</button>
+                </div>
+                <div class="btn-group" id="undo-sync-container" style="display:none; margin-top: -4px;">
+                    <button class="btn btn-undo" onclick="undoSyncAttendance()">↩️ 撤销本次考勤同步（退回数据）</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">本次活动出勤核对表</div>
+            
+            <div class="batch-control">
+                <span class="batch-title">⚡ 快速批量操作（解放双手）：</span>
+                <button class="btn btn-sm" style="background:#475569;" onclick="batchSetProperty('当日次日')">全选: 当日次日(+500万)</button>
+                <button class="btn btn-sm" style="background:#475569;" onclick="batchSetProperty('其余接龙')">全选: 其余接龙(+200万)</button>
+                <button class="btn btn-sm" style="background:#1e3a8a;" onclick="batchSetStatus('出战')">全选: 已出战</button>
+            </div>
+
             <div class="table-responsive">
                 <table id="attendance-table">
                     <thead>
                         <tr>
-                            <th style="width: 45%;">球员名称</th>
-                            <th style="width: 55%;">出勤状态</th>
+                            <th style="width: 30%;">球员名称</th>
+                            <th style="width: 35%;">接龙属性</th>
+                            <th style="width: 35%;">最终出勤状态</th>
                         </tr>
                     </thead>
                     <tbody id="attendance-tbody"></tbody>
@@ -177,33 +268,65 @@
     </div>
 
     <script>
-        // 初始化24位真实球员名单
         const defaultPlayers = [
-            {name: "乐乐", power: "1000万"},
-            {name: "strongmao🐭🐹🐷🐴", power: "1000万"},
-            {name: "唐朝", power: "1000万"},
-            {name: "Bobo", power: "1000万"},
-            {name: "刘刚", power: "1000万"},
-            {name: "老家具", power: "1000万"},
-            {name: "Kiwi", power: "1000万"},
-            {name: "大理寺少卿", power: "1000万"},
-            {name: "🇳🇱", power: "1000万"},
-            {name: "Spike", power: "1000万"},
-            {name: "简单～低调", power: "1000万"},
-            {name: "Lee", power: "1000万"},
-            {name: "迪迪", power: "1000万"},
-            {name: "yc", power: "1000万"},
-            {name: "AAA专业下水道添堵", power: "1000万"},
-            {name: "Y", power: "1000万"},
-            {name: "小曹", power: "1000万"},
-            {name: "楊光", power: "1000万"},
-            {name: "老张白相", power: "1000万"},
-            {name: "chenyi", power: "1000万"},
-            {name: "哈里凯恩", power: "1000万"},
-            {name: "高丰", power: "1000万"},
-            {name: "刘人畅", power: "1000万"},
-            {name: "Z.🍜", power: "1000万"}
+            {name: "乐乐", power: 1000, balls: 1},
+            {name: "strongmao🐭🐹🐷🐴", power: 1000, balls: 1},
+            {name: "唐朝", power: 1000, balls: 1},
+            {name: "Bobo", power: 1000, balls: 1},
+            {name: "刘刚", power: 1000, balls: 1},
+            {name: "老家具", power: 1000, balls: 1},
+            {name: "Kiwi", power: 1000, balls: 1},
+            {name: "大理寺少卿", power: 1000, balls: 1},
+            {name: "🇳🇱", power: 1000, balls: 1},
+            {name: "Spike", power: 1000, balls: 1},
+            {name: "简单～低调", power: 1000, balls: 1},
+            {name: "Lee", power: 1000, balls: 1},
+            {name: "迪迪", power: 1000, balls: 1},
+            {name: "yc", power: 1000, balls: 1},
+            {name: "AAA专业下水道添堵", power: 1000, balls: 1},
+            {name: "Y", power: 1000, balls: 1},
+            {name: "小曹", power: 1000, balls: 1},
+            {name: "楊光", power: 1000, balls: 1},
+            {name: "老张白相", power: 1000, balls: 1},
+            {name: "chenyi", power: 1000, balls: 1},
+            {name: "哈里凯恩", power: 1000, balls: 1},
+            {name: "高丰", power: 1000, balls: 1},
+            {name: "刘人畅", power: 1000, balls: 1},
+            {name: "Z.🍜", power: 1000, balls: 1}
         ];
+
+        const storageKeyRankData = 'xcl_v17_pure_data';
+        let globalPlayers = [];
+        
+        // 🌟 用于记录历史状态的隐藏时光机变量
+        let rankHistoryBackup = null;
+        let syncHistoryBackup = null;
+
+        function saveToRankHistory() {
+            rankHistoryBackup = JSON.stringify(globalPlayers);
+            document.getElementById('btn-undo-rank').style.display = 'inline-block';
+        }
+
+        function undoRankAction() {
+            if (rankHistoryBackup) {
+                globalPlayers = JSON.parse(rankHistoryBackup);
+                rankHistoryBackup = null;
+                document.getElementById('btn-undo-rank').style.display = 'none';
+                sortPlayersByPower();
+                alert("↩️ 已成功撤销上一步的榜单变更！");
+            }
+        }
+
+        function undoSyncAttendance() {
+            if (syncHistoryBackup) {
+                globalPlayers = JSON.parse(syncHistoryBackup);
+                syncHistoryBackup = null;
+                document.getElementById('undo-sync-container').style.display = 'none';
+                sortPlayersByPower();
+                alert("↩️ 考勤数据同步已完美撤销！大名单已退回到同步前的状态。");
+                switchTab('tab-rank');
+            }
+        }
 
         function renderInfiniteBalls(totalCount) {
             let html = '';
@@ -216,81 +339,6 @@
             return html;
         }
 
-        function addBallCount(el) {
-            let current = parseInt(el.getAttribute('data-count')) || 0;
-            current = current + 1;
-            el.setAttribute('data-count', current);
-            el.innerHTML = renderInfiniteBalls(current);
-        }
-
-        function minusOneBall(btn, event) {
-            event.stopPropagation();
-            const container = btn.closest('.balls-container');
-            const row = container.querySelector('.balls-row');
-            let current = parseInt(row.getAttribute('data-count')) || 0;
-            if (current <= 0) return;
-            current = current - 1;
-            row.setAttribute('data-count', current);
-            row.innerHTML = renderInfiniteBalls(current);
-        }
-
-        function consumeBalls(btn, event) {
-            event.stopPropagation();
-            const container = btn.closest('.balls-container');
-            const row = container.querySelector('.balls-row');
-            let current = parseInt(row.getAttribute('data-count')) || 0;
-            if (current < 7) { alert("🔮 龙珠不足7颗！"); return; }
-            current = current - 7;
-            row.setAttribute('data-count', current);
-            row.innerHTML = renderInfiniteBalls(current);
-        }
-
-        function addRow() {
-            const tbody = document.getElementById('rank-tbody');
-            const idx = tbody.rows.length + 1;
-            const newRow = tbody.insertRow();
-            const defaultName = "新球员";
-            newRow.innerHTML = `
-                <td>${idx}</td>
-                <td class="editable">
-                    <div class="player-info">
-                        <span class="player-name-text" contenteditable="true">${defaultName}</span>
-                    </div>
-                </td>
-                <td class="editable power-text" contenteditable="true">1000万</td>
-                <td>
-                    <div class="balls-container">
-                        <div class="balls-row" data-count="1" onclick="addBallCount(this)">${renderInfiniteBalls(1)}</div>
-                        <div class="action-btns">
-                            <button class="btn-mini btn-consume" onclick="consumeBalls(this, event)">🐉召唤</button>
-                            <button class="btn-mini btn-minus" onclick="minusOneBall(this, event)">➖扣除</button>
-                        </div>
-                    </div>
-                </td>`;
-            syncAttendanceRow(defaultName, "出战");
-        }
-
-        function syncAttendanceRow(name, defaultVal = "出战") {
-            const attTbody = document.getElementById('attendance-tbody');
-            const newRow = attTbody.insertRow();
-            newRow.innerHTML = `
-                <tr>
-                    <td>
-                        <div class="player-info">
-                            <b class="player-name-text">${name}</b>
-                        </div>
-                    </td>
-                    <td>
-                        <select class="att-select">
-                            <option value="出战">🔥 已到场出战</option>
-                            <option value="请假">❌ 临时请假</option>
-                            <option value="迟到">⏳ 迟到/未赶上</option>
-                        </select>
-                    </td>
-                </tr>`;
-            newRow.querySelector('.att-select').value = defaultVal;
-        }
-
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -299,61 +347,221 @@
             if(tabId === 'tab-attendance') document.getElementById('btn-attendance').classList.add('active');
         }
 
-        // 核心修复：还原为最初版本的暗号 Key，确保读取之前的老数据
-        const storageKeyRank = 'xcl_v16_noimg_rank';
-        const storageKeyAtts = 'xcl_v16_noimg_atts';
+        function renderRankTable() {
+            const tbody = document.getElementById('rank-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            globalPlayers.forEach((p, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td class="editable"><span class="player-name-text" contenteditable="true" onblur="updatePlayerName(${idx}, this)">${p.name}</span></td>
+                    <td class="editable power-text" contenteditable="true" onfocus="saveToRankHistory()" onblur="updatePlayerPower(${idx}, this)">${p.power}万</td>
+                    <td>
+                        <div class="balls-container">
+                            <div class="balls-row" onclick="addBall(${idx})">${renderInfiniteBalls(p.balls)}</div>
+                            <div class="action-btns">
+                                <button class="btn-mini btn-consume" onclick="consumeBalls(${idx}, event)">召唤</button>
+                                <button class="btn-mini btn-minus" onclick="minusBall(${idx}, event)">➖</button>
+                            </div>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-        window.onload = function() {
-            const rankTbody = document.getElementById('rank-tbody');
-            const savedRankHTML = localStorage.getItem(storageKeyRank);
-            const savedAttVals = localStorage.getItem(storageKeyAtts);
+        function sortPlayersByPower() {
+            globalPlayers.sort((a, b) => (b.power || 0) - (a.power || 0));
+            renderRankTable();
+        }
 
-            if (savedRankHTML) {
-                rankTbody.innerHTML = savedRankHTML;
-                
-                // 处理老版本带图片节点留下的残留，确保这次彻底剥离图片样式
-                rankTbody.querySelectorAll('.avatar-txt').forEach(el => el.remove());
-                
-                const rows = rankTbody.querySelectorAll('tr');
-                let attArray = savedAttVals ? JSON.parse(savedAttVals) : [];
-                rows.forEach((row, idx) => {
-                    const nameEl = row.querySelector('.player-name-text');
-                    if (nameEl) {
-                        const name = nameEl.innerText.trim();
-                        syncAttendanceRow(name, attArray[idx] || "出战");
-                    }
-                });
-            } else {
-                defaultPlayers.forEach((p, idx) => {
-                    rankTbody.innerHTML += `
-                        <tr>
-                            <td>${idx + 1}</td>
-                            <td class="editable">
-                                <div class="player-info">
-                                    <span class="player-name-text" contenteditable="true">${p.name}</span>
-                                </div>
-                            </td>
-                            <td class="editable power-text" contenteditable="true">${p.power}</td>
-                            <td>
-                                <div class="balls-container">
-                                    <div class="balls-row" data-count="1" onclick="addBallCount(this)">${renderInfiniteBalls(1)}</div>
-                                    <div class="action-btns">
-                                        <button class="btn-mini btn-consume" onclick="consumeBalls(this, event)">🐉召唤</button>
-                                        <button class="btn-mini btn-minus" onclick="minusOneBall(this, event)">➖扣除</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>`;
-                    syncAttendanceRow(p.name, "出战");
-                });
+        function addBall(idx) {
+            saveToRankHistory();
+            globalPlayers[idx].balls = (globalPlayers[idx].balls || 0) + 1;
+            renderRankTable();
+        }
+
+        function minusBall(idx, event) {
+            event.stopPropagation();
+            if (globalPlayers[idx].balls > 0) {
+                saveToRankHistory();
+                globalPlayers[idx].balls -= 1;
+                renderRankTable();
             }
         }
 
+        function consumeBalls(idx, event) {
+            event.stopPropagation();
+            if (globalPlayers[idx].balls < 7) {
+                alert(`🔮 ${globalPlayers[idx].name} 龙珠不足 7 颗！`);
+                return;
+            }
+            saveToRankHistory();
+            globalPlayers[idx].balls -= 7;
+            globalPlayers[idx].power = (globalPlayers[idx].power || 1000) + 700;
+            alert(`🐉 成功消耗 ${globalPlayers[idx].name} 的 7 颗龙珠！其战斗力已 +700万`);
+            sortPlayersByPower();
+        }
+
+        function updatePlayerName(idx, el) {
+            saveToRankHistory();
+            globalPlayers[idx].name = el.innerText.trim();
+        }
+
+        function updatePlayerPower(idx, el) {
+            const val = parseInt(el.innerText.replace(/[^0-9]/g, '')) || 1000;
+            if(globalPlayers[idx].power !== val) {
+                globalPlayers[idx].power = val;
+                el.innerText = val + '万';
+                sortPlayersByPower();
+            }
+        }
+
+        function addRow() {
+            saveToRankHistory();
+            globalPlayers.push({name: "新球员", power: 1000, balls: 1});
+            renderRankTable();
+        }
+
+        function batchSetProperty(value) {
+            document.querySelectorAll('.type-select').forEach(select => {
+                select.value = value;
+            });
+        }
+
+        function batchSetStatus(value) {
+            document.querySelectorAll('.status-select').forEach(select => {
+                select.value = value;
+            });
+        }
+
+        function parseAttendanceText() {
+            const text = document.getElementById('import-text').value;
+            if (!text.trim()) {
+                alert("请在输入框中粘贴接龙文字！");
+                return;
+            }
+
+            const tbody = document.getElementById('attendance-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const lines = text.split('\n');
+            let matchedCount = 0;
+
+            lines.forEach(line => {
+                let cleanLine = line.trim();
+                if (!cleanLine) return;
+
+                cleanLine = cleanLine.replace(/^\d+[\.\、\s\-\s]+/g, '').trim();
+                if (!cleanLine) return;
+
+                let 接龙时段 = "其余接龙";
+                if (cleanLine.includes("周二") || cleanLine.includes("周三")) {
+                    接龙时段 = "当日次日";
+                }
+
+                let name = cleanLine.replace(/[\(\（].*?[\)\意变\）]/g, '').trim();
+
+                if (name) {
+                    matchedCount++;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><b class="player-name-text">${name}</b></td>
+                        <td>
+                            <select class="type-select">
+                                <option value="当日次日" ${接龙时段 === '当日次日' ? 'selected' : ''}>📅 当日次日接龙 (+500万)</option>
+                                <option value="其余接龙" ${接龙时段 === '其余接龙' ? 'selected' : ''}>⏳ 其余时间接龙 (+200万)</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="status-select">
+                                <option value="出战">🔥 已到场出战</option>
+                                <option value="请假">❌ 临时请假</option>
+                                <option value="未到">⏳ 未到场</option>
+                            </select>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+
+            if (matchedCount === 0) {
+                alert("未在文本中提取到名单！请确认格式是否正常。");
+            } else {
+                alert(`🎉 成功解析并导入 ${matchedCount} 位球员！可以使用上方的「快速批量操作」一键设置。`);
+            }
+        }
+
+        function syncToRank() {
+            const rows = document.querySelectorAll('#attendance-tbody tr');
+            if (rows.length === 0) {
+                alert("当前出勤核对表没有数据，请先点击「解析并导入名单」！");
+                return;
+            }
+
+            // 🌟 备份状态，用于一键同步撤销
+            syncHistoryBackup = JSON.stringify(globalPlayers);
+            document.getElementById('undo-sync-container').style.display = 'flex';
+
+            let syncCount = 0;
+            let newPlayersCount = 0;
+
+            rows.forEach(row => {
+                const name = row.querySelector('.player-name-text').innerText.trim();
+                const type = row.querySelector('.type-select').value;
+                const status = row.querySelector('.status-select').value;
+
+                if (status === '出战') {
+                    let player = globalPlayers.find(p => p.name === name);
+                    
+                    if (!player) {
+                        player = { name: name, power: 1000, balls: 0 };
+                        globalPlayers.push(player);
+                        newPlayersCount++;
+                    }
+
+                    if (type === '当日次日') {
+                        player.power = (player.power || 1000) + 500;
+                    } else {
+                        player.power = (player.power || 1000) + 200;
+                    }
+
+                    player.balls = (player.balls || 0) + 1;
+                    syncCount++;
+                }
+            });
+
+            sortPlayersByPower();
+            
+            let alertMsg = `⚙️ 同步成功并已自动按最新战力自动排定名次！已结算 ${syncCount} 位到场队员。`;
+            if (newPlayersCount > 0) {
+                alertMsg += `\n🆕 排行榜中已自动注册了 ${newPlayersCount} 位新成员！`;
+            }
+            alertMsg += `\n\n⚠️ 提示：点错了可以点击下方的「撤销本次考勤同步」恢复！没问题请点击底部「锁定并保存」。`;
+            
+            alert(alertMsg);
+            switchTab('tab-rank');
+        }
+
+        window.onload = function() {
+            const savedData = localStorage.getItem(storageKeyRankData);
+            if (savedData) {
+                try {
+                    globalPlayers = JSON.parse(savedData);
+                } catch(e) {
+                    globalPlayers = [...defaultPlayers];
+                }
+            } else {
+                globalPlayers = [...defaultPlayers];
+            }
+            sortPlayersByPower();
+        }
+
         function saveData() {
-            localStorage.setItem(storageKeyRank, document.getElementById('rank-tbody').innerHTML);
-            const attVals = [];
-            document.querySelectorAll('.att-select').forEach(sel => attVals.push(sel.value));
-            localStorage.setItem(storageKeyAtts, JSON.stringify(attVals));
+            localStorage.setItem(storageKeyRankData, JSON.stringify(globalPlayers));
+            alert("💾 最新名单数据已锁死在您的浏览器中！");
         }
     </script>
 </body>
