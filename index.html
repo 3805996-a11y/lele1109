@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新昌兰足球队 - 龙珠赛季</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 70%);
+            color: #f8fafc;
+            margin: 0;
+            padding: 14px;
+            padding-bottom: 90px;
+        }
+        
+        /* 头部酷炫横幅 */
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #1d4ed8 100%);
+            padding: 20px 10px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 25px -5px rgba(234, 88, 12, 0.3), 0 0 15px rgba(29, 78, 216, 0.2);
+            border: 2px solid #fbbf24;
+        }
+        h1 { margin: 0; font-size: 1.6rem; color: #ffffff; text-shadow: 0 3px 6px rgba(0,0,0,0.5); letter-spacing: 1px; }
+        .subtitle { margin: 6px 0 0 0; font-size: 0.9rem; color: #fcd34d; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+        
+        /* 玩法说明卡片 */
+        .rule-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 5px solid #ea580c;
+            border-radius: 4px 14px 14px 4px;
+            padding: 14px;
+            margin-bottom: 15px;
+        }
+        .rule-title { font-size: 0.95rem; font-weight: bold; color: #fbbf24; margin-bottom: 8px; }
+        .rule-item { font-size: 0.8rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 6px; padding-left: 14px; position: relative; }
+        .rule-item::before { content: '•'; position: absolute; left: 0; color: #ea580c; }
+        .rule-item em { color: #f43f5e; font-style: normal; font-weight: bold; }
 
+        /* 通用卡片容器 */
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card-header { border-left: 4px solid #f97316; padding-left: 10px; margin-bottom: 14px; font-size: 1rem; font-weight: bold; }
+        
+        /* 表格高级排版 */
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.85rem; text-align: center; table-layout: fixed; }
+        th, td { padding: 10px 4px; border-bottom: 1px solid rgba(51, 65, 85, 0.4); border-right: 1px solid rgba(51, 65, 85, 0.2); vertical-align: middle; }
+        th { background-color: #0f172a; color: #94a3b8; font-weight: 600; font-size: 0.8rem; }
+        th:first-child { border-radius: 8px 0 0 0; }
+        th:last-child { border-radius: 0 8px 0 0; border-right: none; }
+        td:last-child { border-right: none; }
+        
+        /* 名字容器 */
+        .player-info { display: block; text-align: left; padding-left: 6px; }
+        .player-name-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; display: block; }
+
+        /* 交互样式 */
+        .editable { background-color: rgba(15, 23, 42, 0.4); color: #ffffff; border: 1px solid rgba(71, 85, 105, 0.4); border-radius: 6px; min-height: 28px; padding: 2px; }
+        .power-text { color: #f59e0b; font-weight: bold; }
+        
+        .btn-group { display: flex; gap: 10px; margin-bottom: 12px; }
+        .btn { flex: 1; background: linear-gradient(135deg, #f97316, #ea580c); color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+        
+        .btn-save {
+            position: fixed; bottom: 18px; left: 5%; right: 5%; width: 90%;
+            background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 14px;
+            border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1rem; z-index: 100; text-align: center;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .footer-nav { display: flex; justify-content: space-around; margin-bottom: 15px; background: rgba(15, 23, 42, 0.6); padding: 6px; border-radius: 12px; }
+        .nav-item { flex: 1; text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 10px; cursor: pointer; border-radius: 8px; }
+        .nav-item.active { color: #ffffff; background-color: #ea580c; font-weight: bold; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        select { background-color: #0f172a; color: #fff; border: 1px solid #475569; border-radius: 6px; padding: 4px; font-size: 0.75rem; width: 100%; }
+        
+        /* 龙珠操作区 */
+        .balls-container { display: flex; align-items: center; justify-content: space-between; gap: 4px; width: 100%; }
+        .balls-row { display: flex; gap: 3px; justify-content: flex-start; align-items: center; flex-wrap: wrap; flex: 1; min-height: 32px; }
+        .action-btns { display: flex; flex-direction: column; gap: 3px; }
+        .btn-mini { color: white; border: none; padding: 3px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; cursor: pointer; text-align: center; }
+        .btn-consume { background: #10b981; }
+        .btn-minus { background: #ef4444; }
+        
+        /* 立体龙珠样式 */
+        .mini-ball {
+            display: inline-flex; justify-content: center; align-items: center; width: 19px; height: 19px;
+            background: radial-gradient(circle at 35% 35%, #ffea79 0%, #ff9000 50%, #d84315 100%);
+            border-radius: 50%; border: 1px solid #fff3c4; box-shadow: 0 1px 2px rgba(0,0,0,0.4); position: relative;
+        }
+        .star-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        .mini-star { color: #e11d48; font-size: 6px; font-weight: 900; position: absolute; }
+        
+        /* 龙珠星级定位 */
+        .stars-1 .s1 { font-size: 8px; }
+        .stars-2 .s1 { transform: translate(-3px, 0); } .stars-2 .s2 { transform: translate(3px, 0); }
+        .stars-3 .s1 { transform: translate(0, -3px); } .stars-3 .s2 { transform: translate(-3px, 2px); } .stars-3 .s3 { transform: translate(3px, 2px); }
+        .stars-4 .s1 { transform: translate(-2.5px, -2.5px); } .stars-4 .s2 { transform: translate(2.5px, -2.5px); } .stars-4 .s3 { transform: translate(-2.5px, 2.5px); } .stars-4 .s4 { transform: translate(2.5px, 2.5px); }
+        .stars-5 .s1 { transform: translate(-2.5px, -2.5px); } .stars-5 .s2 { transform: translate(2.5px, -2.5px); } .stars-5 .s3 { transform: translate(0, 0); font-size: 5px; } .stars-5 .s4 { transform: translate(-2.5px, 2.5px); } .stars-5 .s5 { transform: translate(2.5px, 2.5px); }
+        .stars-6 .s1 { transform: translate(0, -4px); } .stars-6 .s2 { transform: translate(-3px, -2px); } .stars-6 .s3 { transform: translate(3px, -2px); } .stars-6 .s4 { transform: translate(-3px, 2px); } .stars-6 .s5 { transform: translate(3px, 2px); } .stars-6 .s6 { transform: translate(0, 4px); }
+        .stars-7 .s1 { transform: translate(0, -4px); } .stars-7 .s2 { transform: translate(-3px, -2px); } .stars-7 .s3 { transform: translate(3px, -2px); } .stars-7 .s4 { transform: translate(0, 0); font-size: 4px; } .stars-7 .s5 { transform: translate(-3px, 2px); } .stars-7 .s6 { transform: translate(3px, 2px); } .stars-7 .s7 { transform: translate(0, 4px); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>新昌兰足球队</h1>
+        <div class="subtitle">🔮 第五赛季 · 龙珠赛季 🔮</div>
+    </div>
+
+    <div class="rule-card">
+        <div class="rule-title">🔮 赛季玩法说明</div>
+        <div class="rule-item">一、第四赛季身价不保留，每位球员赛季起始【战斗力数值】<em>1000 万</em></div>
+        <div class="rule-item">二、当日次日接龙<strong>加 500</strong>，其余<strong>加 200</strong></div>
+        <div class="rule-item">三、每踢一场球获得 <strong>1 颗龙珠</strong></div>
+        <div class="rule-item">四、集满 7 颗龙珠可<em>召唤任意一名球员</em>到自己队中，同时被召唤者【战斗力】<strong>+700</strong></div>
+    </div>
+
+    <div class="footer-nav">
+        <div id="btn-rank" class="nav-item active" onclick="switchTab('tab-rank')">📊 球员战斗力排行榜</div>
+        <div id="btn-attendance" class="nav-item" onclick="switchTab('tab-attendance')">🐉 赛后考勤签到</div>
+    </div>
+
+    <button class="btn-save" onclick="saveData()">💾 锁定并保存数据到手机</button>
+
+    <div id="tab-rank" class="tab-content active">
+        <div class="card">
+            <div class="card-header">球员战斗力与无限龙珠串榜单</div>
+            <div class="btn-group">
+                <button class="btn" onclick="addRow()">＋ 召唤新球员</button>
+            </div>
+            <div class="table-responsive">
+                <table id="rank-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">序</th>
+                            <th style="width: 38%;">球员名称</th>
+                            <th style="width: 22%;">当前战斗力</th>
+                            <th style="width: 30%;">龙珠排面</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rank-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-attendance" class="tab-content">
+        <div class="card">
+            <div class="card-header">当前出勤核对</div>
+            <div class="table-responsive">
+                <table id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">球员名称</th>
+                            <th style="width: 55%;">出勤状态</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化24位真实球员名单
+        const defaultPlayers = [
+            {name: "乐乐", power: "1000万"},
+            {name: "strongmao🐭🐹🐷🐴", power: "1000万"},
+            {name: "唐朝", power: "1000万"},
+            {name: "Bobo", power: "1000万"},
+            {name: "刘刚", power: "1000万"},
+            {name: "老家具", power: "1000万"},
+            {name: "Kiwi", power: "1000万"},
+            {name: "大理寺少卿", power: "1000万"},
+            {name: "🇳🇱", power: "1000万"},
+            {name: "Spike", power: "1000万"},
+            {name: "简单～低调", power: "1000万"},
+            {name: "Lee", power: "1000万"},
+            {name: "迪迪", power: "1000万"},
+            {name: "yc", power: "1000万"},
+            {name: "AAA专业下水道添堵", power: "1000万"},
+            {name: "Y", power: "1000万"},
+            {name: "小曹", power: "1000万"},
+            {name: "楊光", power: "1000万"},
+            {name: "老张白相", power: "1000万"},
+            {name: "chenyi", power: "1000万"},
+            {name: "哈里凯恩", power: "1000万"},
+            {name: "高丰", power: "1000万"},
+            {name: "刘人畅", power: "1000万"},
+            {name: "Z.🍜", power: "1000万"}
+        ];
+
+        function renderInfiniteBalls(totalCount) {
+            let html = '';
+            for (let i = 1; i <= totalCount; i++) {
+                let starCount = ((i - 1) % 7) + 1;
+                html += `<div class="mini-ball"><div class="star-container stars-${starCount}">`;
+                for (let j = 1; j <= starCount; j++) { html += `<span class="mini-star s${j}">★</span>`; }
+                html += `</div></div>`;
+            }
+            return html;
+        }
+
+        function addBallCount(el) {
+            let current = parseInt(el.getAttribute('data-count')) || 0;
+            current = current + 1;
+            el.setAttribute('data-count', current);
+            el.innerHTML = renderInfiniteBalls(current);
+        }
+
+        function minusOneBall(btn, event) {
+            event.stopPropagation();
+            const container = btn.closest('.balls-container');
+            const row = container.querySelector('.balls-row');
+            let current = parseInt(row.getAttribute('data-count')) || 0;
+            if (current <= 0) return;
+            current = current - 1;
+            row.setAttribute('data-count', current);
+            row.innerHTML = renderInfiniteBalls(current);
+        }
+
+        function consumeBalls(btn, event) {
+            event.stopPropagation();
+            const container = btn.closest('.balls-container');
+            const row = container.querySelector('.balls-row');
+            let current = parseInt(row.getAttribute('data-count')) || 0;
+            if (current < 7) { alert("🔮 龙珠不足7颗！"); return; }
+            current = current - 7;
+            row.setAttribute('data-count', current);
+            row.innerHTML = renderInfiniteBalls(current);
+        }
+
+        function addRow() {
+            const tbody = document.getElementById('rank-tbody');
+            const idx = tbody.rows.length + 1;
+            const newRow = tbody.insertRow();
+            const defaultName = "新球员";
+            newRow.innerHTML = `
+                <td>${idx}</td>
+                <td class="editable">
+                    <div class="player-info">
+                        <span class="player-name-text" contenteditable="true">${defaultName}</span>
+                    </div>
+                </td>
+                <td class="editable power-text" contenteditable="true">1000万</td>
+                <td>
+                    <div class="balls-container">
+                        <div class="balls-row" data-count="1" onclick="addBallCount(this)">${renderInfiniteBalls(1)}</div>
+                        <div class="action-btns">
+                            <button class="btn-mini btn-consume" onclick="consumeBalls(this, event)">🐉召唤</button>
+                            <button class="btn-mini btn-minus" onclick="minusOneBall(this, event)">➖扣除</button>
+                        </div>
+                    </div>
+                </td>`;
+            syncAttendanceRow(defaultName, "出战");
+        }
+
+        function syncAttendanceRow(name, defaultVal = "出战") {
+            const attTbody = document.getElementById('attendance-tbody');
+            const newRow = attTbody.insertRow();
+            newRow.innerHTML = `
+                <tr>
+                    <td>
+                        <div class="player-info">
+                            <b class="player-name-text">${name}</b>
+                        </div>
+                    </td>
+                    <td>
+                        <select class="att-select">
+                            <option value="出战">🔥 已到场出战</option>
+                            <option value="请假">❌ 临时请假</option>
+                            <option value="迟到">⏳ 迟到/未赶上</option>
+                        </select>
+                    </td>
+                </tr>`;
+            newRow.querySelector('.att-select').value = defaultVal;
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if(tabId === 'tab-rank') document.getElementById('btn-rank').classList.add('active');
+            if(tabId === 'tab-attendance') document.getElementById('btn-attendance').classList.add('active');
+        }
+
+        // 核心修复：还原为最初版本的暗号 Key，确保读取之前的老数据
+        const storageKeyRank = 'xcl_v16_noimg_rank';
+        const storageKeyAtts = 'xcl_v16_noimg_atts';
+
+        window.onload = function() {
+            const rankTbody = document.getElementById('rank-tbody');
+            const savedRankHTML = localStorage.getItem(storageKeyRank);
+            const savedAttVals = localStorage.getItem(storageKeyAtts);
+
+            if (savedRankHTML) {
+                rankTbody.innerHTML = savedRankHTML;
+                
+                // 处理老版本带图片节点留下的残留，确保这次彻底剥离图片样式
+                rankTbody.querySelectorAll('.avatar-txt').forEach(el => el.remove());
+                
+                const rows = rankTbody.querySelectorAll('tr');
+                let attArray = savedAttVals ? JSON.parse(savedAttVals) : [];
+                rows.forEach((row, idx) => {
+                    const nameEl = row.querySelector('.player-name-text');
+                    if (nameEl) {
+                        const name = nameEl.innerText.trim();
+                        syncAttendanceRow(name, attArray[idx] || "出战");
+                    }
+                });
+            } else {
+                defaultPlayers.forEach((p, idx) => {
+                    rankTbody.innerHTML += `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td class="editable">
+                                <div class="player-info">
+                                    <span class="player-name-text" contenteditable="true">${p.name}</span>
+                                </div>
+                            </td>
+                            <td class="editable power-text" contenteditable="true">${p.power}</td>
+                            <td>
+                                <div class="balls-container">
+                                    <div class="balls-row" data-count="1" onclick="addBallCount(this)">${renderInfiniteBalls(1)}</div>
+                                    <div class="action-btns">
+                                        <button class="btn-mini btn-consume" onclick="consumeBalls(this, event)">🐉召唤</button>
+                                        <button class="btn-mini btn-minus" onclick="minusOneBall(this, event)">➖扣除</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>`;
+                    syncAttendanceRow(p.name, "出战");
+                });
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(storageKeyRank, document.getElementById('rank-tbody').innerHTML);
+            const attVals = [];
+            document.querySelectorAll('.att-select').forEach(sel => attVals.push(sel.value));
+            localStorage.setItem(storageKeyAtts, JSON.stringify(attVals));
+        }
+    </script>
+</body>
+</html>
